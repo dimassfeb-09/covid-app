@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'dart:html';
 
+import 'package:covid/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -10,7 +10,6 @@ import '../controllers/home_controller.dart';
 import 'package:http/http.dart' as http;
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,12 +38,38 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
           ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+          Padding(
+            padding: EdgeInsets.only(top: 20, right: 16, left: 16),
+            child: Text(
+              "Layanan Fight Covid-19",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.start,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(right: 16, left: 16, bottom: 20, top: 11),
+            height: 189,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ContainerFightCovid(tipe: 'RS'),
+                    ContainerFightCovid(tipe: 'Edukasi'),
+                    ContainerFightCovid(tipe: 'Hotline'),
+                    ContainerFightCovid(tipe: 'Internasional'),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [],
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -217,8 +242,8 @@ class HeaderAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 20, left: 16, right: 16),
-      height: 135,
+      padding: EdgeInsets.only(top: 20, left: 16, right: 16, bottom: 20),
+      height: 90,
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
@@ -261,18 +286,57 @@ class HeaderAppBar extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 10),
-          Container(
-            padding: EdgeInsets.all(10),
-            height: 40,
-            width: 500,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Text("Indonesia"),
-          ),
         ],
+      ),
+    );
+  }
+}
+
+class ContainerFightCovid extends StatelessWidget {
+  HomeController homeController = HomeController();
+
+  String tipe;
+
+  ContainerFightCovid({required this.tipe});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Get.toNamed("/${homeController.menuLayanan(tipe: tipe)['page']}");
+      },
+      child: Container(
+        height: 100,
+        width: 74,
+        decoration: BoxDecoration(
+          color: Color(0xFFFFFFFF),
+          borderRadius: BorderRadius.circular(4),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xFFC4BDE3).withOpacity(0.5),
+              offset: Offset(1, 5),
+              blurRadius: 10,
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Image(
+              image: AssetImage(homeController.menuLayanan(tipe: tipe)['logo']),
+              width: 35,
+              height: 35,
+            ),
+            Text(
+              homeController.menuLayanan(tipe: tipe)['title'],
+              style: TextStyle(
+                fontSize: 10,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }

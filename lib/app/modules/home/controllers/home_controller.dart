@@ -3,21 +3,34 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   //TODO: Implement HomeController
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  menuLayanan({required String tipe}) {
+    Map mapData = {
+      "RS": {
+        "title": "Rujukan Rumah Sakit",
+        "logo": "assets/images/LayananCovid/rumah-sakit.png",
+        "page": "rujukan",
+      },
+      "Edukasi": {
+        "title": "Edukasi Covid-19",
+        "logo": "assets/images/LayananCovid/edukasi-covid.png",
+        "page": "edukasi",
+      },
+      "Hotline": {
+        "title": "Hotline",
+        "logo": "assets/images/LayananCovid/hotline.png",
+        "page": "hotline",
+      },
+      "Internasional": {
+        "title": "Data Internasional",
+        "logo": "assets/images/LayananCovid/data-internasional.png",
+        "page": "internasional",
+      },
+    };
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+    String title = mapData[tipe]['title'];
+    String logo = mapData[tipe]['logo'];
+    var page = mapData[tipe]['page'];
 
-  @override
-  void onClose() {
-    super.onClose();
+    return {"title": title, "logo": logo, "page": page};
   }
-
-  void increment() => count.value++;
 }
