@@ -10,6 +10,8 @@ import '../modules/internasional/bindings/internasional_binding.dart';
 import '../modules/internasional/views/internasional_view.dart';
 import '../modules/rujukan/bindings/rujukan_binding.dart';
 import '../modules/rujukan/views/rujukan_view.dart';
+import '../modules/rujukanrs/bindings/rujukanrs_binding.dart';
+import '../modules/rujukanrs/views/rujukanrs_view.dart';
 
 part 'app_routes.dart';
 
@@ -26,7 +28,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.RUJUKAN,
-      page: () => const RujukanView(),
+      page: () => RujukanView(),
       binding: RujukanBinding(),
     ),
     GetPage(
@@ -43,6 +45,11 @@ class AppPages {
       name: _Paths.INTERNASIONAL,
       page: () => const InternasionalView(),
       binding: InternasionalBinding(),
+    ),
+    GetPage(
+      name: _Paths.RUJUKANRS,
+      page: () => RujukanrsView(),
+      binding: RujukanrsBinding(),
     ),
   ];
 }

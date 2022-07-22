@@ -8,6 +8,7 @@ abstract class Routes {
   static const EDUKASI = _Paths.EDUKASI;
   static const HOTLINE = _Paths.HOTLINE;
   static const INTERNASIONAL = _Paths.INTERNASIONAL;
+  static const RUJUKANRS = _Paths.RUJUKANRS;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const EDUKASI = '/edukasi';
   static const HOTLINE = '/hotline';
   static const INTERNASIONAL = '/internasional';
+  static const RUJUKANRS = '/rujukanrs';
 }

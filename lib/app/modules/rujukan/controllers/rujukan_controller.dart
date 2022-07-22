@@ -1,23 +1,13 @@
+import 'dart:convert';
+
+import 'package:covid/app/routes/app_pages.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:http/retry.dart';
 
 class RujukanController extends GetxController {
   //TODO: Implement RujukanController
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
+  String selectedCity = "";
 }
