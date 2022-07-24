@@ -1,7 +1,20 @@
+import 'dart:convert';
+
+import 'package:covid/models/dataCovidIndonesiaModels.dart';
+import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
+
+  Future getData() async {
+    Uri url = Uri.parse("https://data.covid19.go.id/public/api/update.json");
+    var response = await http.get(url);
+
+    var decode = jsonDecode(response.body)['update']['penambahan'];
+
+    return decode;
+  }
 
   menuLayanan({required String tipe}) {
     Map mapData = {

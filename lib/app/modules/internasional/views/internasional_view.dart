@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../controllers/internasional_controller.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class InternasionalView extends GetView<InternasionalController> {
   const InternasionalView({Key? key}) : super(key: key);
@@ -54,7 +55,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
       child: Column(
         children: [
           Container(
-            height: 200,
+            height: 180,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -65,7 +66,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                       "Update Hari Ini",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text(DateTime.now().toString()),
+                    Text(DateFormat.yMMMMd().format(DateTime.now()).toString()),
                   ],
                 ),
                 SizedBox(height: 12),
@@ -189,7 +190,6 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                     }
                   },
                 ),
-                SizedBox(height: 30),
               ],
             ),
           ),
@@ -205,7 +205,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                       "Total Data Dunia",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text(DateTime.now().toString()),
+                    Text(DateFormat.yMMMMd().format(DateTime.now()).toString()),
                   ],
                 ),
                 SizedBox(height: 12),

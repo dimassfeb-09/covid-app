@@ -4,6 +4,7 @@ import 'package:covid/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -22,226 +23,17 @@ class HomeView extends GetView<HomeController> {
         children: [
           HeaderAppBar(),
           UpdateTerkini(),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
-              height: 87,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage("assets/images/card-jadipahlawan.png"),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20, right: 16, left: 16),
-            child: Text(
-              "Layanan Fight Covid-19",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.start,
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 16, left: 16, bottom: 20, top: 11),
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                LayananFightCovid19(),
-                SizedBox(height: 20),
-              ],
-            ),
-          ),
+          PahlawanCovid(),
+          LayananFightCovid19(),
         ],
       ),
     );
   }
 }
 
-class LayananFightCovid19 extends StatelessWidget {
-  Map menu = {
-    "RS": {
-      "Route": Routes.RUJUKAN,
-      "title": "RS Rujukan",
-      "logo": "assets/images/LayananCovid/rumah-sakit.png",
-    },
-    "HOTLINE": {
-      "Route": Routes.HOTLINE,
-      "title": "Hotline",
-      "logo": "assets/images/LayananCovid/hotline.png",
-    },
-    "INTERNASIONAL": {
-      "Route": Routes.INTERNASIONAL,
-      "title": "Data \nInternasional",
-      "logo": "assets/images/LayananCovid/data-internasional.png",
-    },
-  };
-
+class UpdateTerkini extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        InkWell(
-          onTap: () {
-            Get.toNamed(menu['RS']['Route']);
-          },
-          borderRadius: BorderRadius.circular(10),
-          splashColor: Color(0xFF794EE0).withOpacity(0.25),
-          highlightColor: Color(0xFF794EE0).withOpacity(0.5),
-          child: Ink(
-            height: 100,
-            width: 100,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(1, 1),
-                  blurRadius: 10,
-                  color: Color(0xFFC4BDE3),
-                ),
-              ],
-              color: Color(0xFFFFFFFF),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Image(
-                  image: AssetImage(
-                    menu['RS']['logo'],
-                  ),
-                  height: 36,
-                  width: 36,
-                ),
-                Text(
-                  menu['RS']['title'],
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        InkWell(
-          onTap: () {
-            Get.toNamed(menu['HOTLINE']['Route']);
-          },
-          borderRadius: BorderRadius.circular(10),
-          splashColor: Color(0xFF794EE0).withOpacity(0.25),
-          highlightColor: Color(0xFF794EE0).withOpacity(0.5),
-          child: Ink(
-            height: 100,
-            width: 100,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(1, 1),
-                  blurRadius: 10,
-                  color: Color(0xaaC4BDE3),
-                ),
-              ],
-              color: Color(0xFFFFFFFF),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Image(
-                  image: AssetImage(
-                    menu['HOTLINE']['logo'],
-                  ),
-                  height: 36,
-                  width: 36,
-                ),
-                Text(
-                  menu['HOTLINE']['title'],
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        InkWell(
-          onTap: () {
-            Get.toNamed(
-              menu['INTERNASIONAL']['Route'],
-            );
-          },
-          borderRadius: BorderRadius.circular(10),
-          splashColor: Color(0xFF794EE0).withOpacity(0.25),
-          highlightColor: Color(0xFF794EE0).withOpacity(0.5),
-          child: Ink(
-            height: 100,
-            width: 100,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(1, 1),
-                  blurRadius: 10,
-                  color: Color(0xaaC4BDE3),
-                ),
-              ],
-              color: Color(0xFFFFFFFF),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Image(
-                  image: AssetImage(
-                    menu['INTERNASIONAL']['logo'],
-                  ),
-                  height: 36,
-                  width: 36,
-                ),
-                Text(
-                  menu['INTERNASIONAL']['title'],
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class UpdateTerkini extends StatefulWidget {
-  UpdateTerkini({Key? key}) : super(key: key);
-
-  @override
-  State<UpdateTerkini> createState() => _UpdateTerkiniState();
-}
-
-class _UpdateTerkiniState extends State<UpdateTerkini> {
-  @override
-  Future getData() async {
-    Uri url = Uri.parse("https://data.covid19.go.id/public/api/update.json");
-    var response = await http.get(url);
-
-    var decode = jsonDecode(response.body)['update']['penambahan'];
-
-    return decode;
-  }
+  HomeController homeController = HomeController();
 
   @override
   Widget build(BuildContext context) {
@@ -259,12 +51,12 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                   "Update Terkini",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(DateTime.now().toString()),
+                Text(DateFormat.yMMMMd().format(DateTime.now())),
               ],
             ),
             SizedBox(height: 12),
             FutureBuilder(
-              future: getData(),
+              future: homeController.getData(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -378,6 +170,216 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class PahlawanCovid extends StatelessWidget {
+  const PahlawanCovid({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        margin: EdgeInsets.symmetric(
+          horizontal: 16,
+        ),
+        height: 87,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage("assets/images/card-jadipahlawan.png"),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LayananFightCovid19 extends StatelessWidget {
+  Map menu = {
+    "RS": {
+      "Route": Routes.RUJUKAN,
+      "title": "RS Rujukan",
+      "logo": "assets/images/LayananCovid/rumah-sakit.png",
+    },
+    "HOTLINE": {
+      "Route": Routes.HOTLINE,
+      "title": "Hotline",
+      "logo": "assets/images/LayananCovid/hotline.png",
+    },
+    "INTERNASIONAL": {
+      "Route": Routes.INTERNASIONAL,
+      "title": "Data \nInternasional",
+      "logo": "assets/images/LayananCovid/data-internasional.png",
+    },
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.only(right: 16, left: 16, bottom: 20, top: 20),
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Layanan Fight Covid-19",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.start,
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(menu['RS']['Route']);
+                    },
+                    borderRadius: BorderRadius.circular(10),
+                    splashColor: Color(0xFF794EE0).withOpacity(0.25),
+                    highlightColor: Color(0xFF794EE0).withOpacity(0.5),
+                    child: Ink(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(1, 1),
+                            blurRadius: 10,
+                            color: Color(0xFFC4BDE3),
+                          ),
+                        ],
+                        color: Color(0xFFFFFFFF),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Image(
+                            image: AssetImage(
+                              menu['RS']['logo'],
+                            ),
+                            height: 36,
+                            width: 36,
+                          ),
+                          Text(
+                            menu['RS']['title'],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(menu['HOTLINE']['Route']);
+                    },
+                    borderRadius: BorderRadius.circular(10),
+                    splashColor: Color(0xFF794EE0).withOpacity(0.25),
+                    highlightColor: Color(0xFF794EE0).withOpacity(0.5),
+                    child: Ink(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(1, 1),
+                            blurRadius: 10,
+                            color: Color(0xaaC4BDE3),
+                          ),
+                        ],
+                        color: Color(0xFFFFFFFF),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Image(
+                            image: AssetImage(
+                              menu['HOTLINE']['logo'],
+                            ),
+                            height: 36,
+                            width: 36,
+                          ),
+                          Text(
+                            menu['HOTLINE']['title'],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(
+                        menu['INTERNASIONAL']['Route'],
+                      );
+                    },
+                    borderRadius: BorderRadius.circular(10),
+                    splashColor: Color(0xFF794EE0).withOpacity(0.25),
+                    highlightColor: Color(0xFF794EE0).withOpacity(0.5),
+                    child: Ink(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(1, 1),
+                            blurRadius: 10,
+                            color: Color(0xaaC4BDE3),
+                          ),
+                        ],
+                        color: Color(0xFFFFFFFF),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Image(
+                            image: AssetImage(
+                              menu['INTERNASIONAL']['logo'],
+                            ),
+                            height: 36,
+                            width: 36,
+                          ),
+                          Text(
+                            menu['INTERNASIONAL']['title'],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

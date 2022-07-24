@@ -2,7 +2,6 @@
 //
 //     final dataRsModels = dataRsModelsFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 DataRsModels dataRsModelsFromJson(String str) =>
@@ -18,14 +17,20 @@ class DataRsModels {
     required this.alamat,
     required this.kota,
     required this.provinsi,
+    required this.latitude,
+    required this.longitude,
+    required this.telp,
   });
 
-  int id;
-  String kode;
-  String nama;
-  String alamat;
-  String kota;
-  String provinsi;
+  int? id;
+  String? kode;
+  String? nama;
+  String? alamat;
+  String? kota;
+  String? provinsi;
+  String? latitude;
+  String? longitude;
+  String? telp;
 
   factory DataRsModels.fromJson(Map<String, dynamic> json) => DataRsModels(
         id: json["id"],
@@ -34,6 +39,9 @@ class DataRsModels {
         alamat: json["alamat"],
         kota: json["kota"],
         provinsi: json["provinsi"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
+        telp: json["telp"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,5 +51,11 @@ class DataRsModels {
         "alamat": alamat,
         "kota": kota,
         "provinsi": provinsi,
+        "latitude": latitude,
+        "longitude": longitude,
+        "telp": telp,
       };
+
+  @override
+  String toString() => nama!;
 }

@@ -1,18 +1,13 @@
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:covid/models/dataRsModels.dart';
-import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../models/cityModels.dart';
 import '../../../../models/provinceModels.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import 'package:get/get.dart';
-import 'package:http/retry.dart';
 
 import '../controllers/rujukan_controller.dart';
 import 'package:http/http.dart' as http;
@@ -37,209 +32,106 @@ class RujukanView extends GetView<RujukanController> {
   }
 }
 
-class RsRujukan extends StatefulWidget {
-  @override
-  State<RsRujukan> createState() => _RsRujukanState();
-}
+class RsRujukan extends StatelessWidget {
+  RujukanController rujukanController = RujukanController();
 
-bool isRsSelected = false;
-
-String keyProvince = "0";
-String keyCity = "0";
-
-RxMap detailRs = {
-  'id': 0,
-  'nama': '',
-  'alamat': '',
-  'kota': '',
-  'provinsi': '',
-}.obs;
-
-class _RsRujukanState extends State<RsRujukan> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 20,
-      ),
-      child: ListView(
-        children: [
-          DropdownSearch<ProvinceModels>(
-            onChanged: (value) async {
-              keyProvince = value!.key;
-            },
-            asyncItems: (text) async {
-              try {
-                Uri url =
-                    Uri.parse("https://kipi.covid19.go.id/api/get-province");
-                var response = await http.post(url);
+    return ListView(
+      padding: EdgeInsets.all(20),
+      children: [
+        DropdownSearch<ProvinceModels>(
+          asyncItems: (text) {
+            return rujukanController.postDataProvince();
+          },
+          onChanged: (value) {
+            rujukanController.province_id.value = value!.value;
+            print("Selected Province: " + value.key);
+          },
+          popupProps: PopupProps.menu(
+            showSearchBox: true,
+          ),
+          dropdownDecoratorProps: DropDownDecoratorProps(
+            dropdownSearchDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              label: Text("Pilih Provinsi"),
+            ),
+          ),
+        ),
+        SizedBox(height: 20),
+        DropdownSearch<CityModels>(
+          asyncItems: (text) {
+            return rujukanController.postDataCity();
+          },
+          onChanged: (value) {
+            rujukanController.city_id.value = value!.value;
 
-                List data = jsonDecode(response.body)['results'];
+            print("Selected City: " + value.key);
+          },
+          popupProps: PopupProps.menu(
+            showSearchBox: true,
+          ),
+          dropdownDecoratorProps: DropDownDecoratorProps(
+            dropdownSearchDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              label: Text("Pilih Kota"),
+            ),
+          ),
+        ),
+        SizedBox(height: 20),
+        DropdownSearch<DataRsModels>(
+          asyncItems: (text) {
+            return rujukanController.getDataRs();
+          },
+          onBeforePopupOpening: (selectedItem) async {
+            return true;
+          },
+          onBeforeChange: (prevItem, nextItem) async {
+            rujukanController.renderDetailRs.value = true;
+            return true;
+          },
+          onChanged: (value) {
+            print("Selected RS: " + value!.nama!);
 
-                List<ProvinceModels> allProvinceModels = [];
-
-                data.forEach((element) {
-                  allProvinceModels.add(
-                    ProvinceModels(
-                      key: element['key'],
-                      value: element['value'],
-                    ),
-                  );
-                });
-
-                return allProvinceModels;
-              } catch (e) {
-                print(e);
-                print("PROVINSI ERROR");
-                return [];
-              }
-            },
-            onBeforeChange: (prevItem, nextItem) async {
-              keyProvince = nextItem!.value;
-
-              setState(() {
-                isRsSelected = false;
-              });
-
-              return true;
-            },
-            dropdownBuilder: (context, selectedItem) =>
-                Text(selectedItem?.value ?? 'Pilih Provinsi'),
-            clearButtonProps: ClearButtonProps(),
-            popupProps: PopupProps.menu(
-              showSearchBox: true,
-              searchFieldProps: TextFieldProps(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-              itemBuilder: (context, item, isSelected) {
-                return ListTile(
-                  leading: Text(item.value),
-                );
+            rujukanController.detailRs.addAll({
+              "id": value.id,
+              "nama": value.nama,
+              "alamat": value.alamat,
+              "kota": value.kota,
+              "provinsi": value.provinsi,
+              "telp": value.telp,
+              "location": {
+                "latitude": value.latitude,
+                "longitude": value.longitude,
               },
+            });
+          },
+          popupProps: PopupProps.menu(
+            showSearchBox: true,
+          ),
+          dropdownDecoratorProps: DropDownDecoratorProps(
+            dropdownSearchDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              label: Text("Pilih Rumah Sakit"),
             ),
           ),
-          SizedBox(height: 20),
-          DropdownSearch<CityModels>(
-            onChanged: (value) {
-              keyCity = value!.key;
-            },
-            asyncItems: (text) async {
-              Uri url = Uri.parse(
-                  "https://kipi.covid19.go.id/api/get-city?start_id=$keyProvince");
-              var response = await http.post(url);
-
-              List data = jsonDecode(response.body)['results'];
-
-              List<CityModels> allCityModels = [];
-
-              data.forEach((element) {
-                allCityModels.add(
-                  CityModels(
-                    key: element['key'],
-                    value: element['value'],
-                  ),
-                );
-              });
-
-              return allCityModels;
-            },
-            onBeforeChange: (prevItem, nextItem) async {
-              keyCity = nextItem!.value;
-
-              return true;
-            },
-            dropdownBuilder: (context, selectedItem) {
-              return Text(selectedItem?.value ?? 'Pilih Kota');
-            },
-            clearButtonProps: ClearButtonProps(),
-            popupProps: PopupProps.menu(
-              showSearchBox: true,
-              itemBuilder: (context, item, isSelected) => ListTile(
-                leading: Text(
-                  item.value,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 20),
-          DropdownSearch<DataRsModels>(
-            onChanged: (value) async {
-              Uri url = Uri.parse(
-                  "https://kipi.covid19.go.id/api/get-faskes-vaksinasi?province=$keyProvince&city=$keyCity");
-              var response = await http.get(url);
-
-              List data = jsonDecode(response.body)['data'];
-
-              List<DataRsModels> dataRsModel = [];
-
-              data.forEach((element) {
-                dataRsModel.add(
-                  DataRsModels.fromJson(element),
-                );
-              });
-            },
-            onBeforeChange: (prevItem, nextItem) async {
-              setState(() {
-                isRsSelected = true;
-                detailRs.value['id'] = nextItem?.id;
-                detailRs.value['nama'] = nextItem?.nama;
-                detailRs.value['alamat'] = nextItem?.alamat;
-                detailRs.value['kota'] = nextItem?.kota;
-                detailRs.value['provinsi'] = nextItem?.provinsi;
-              });
-
-              print(detailRs['nama']);
-
-              return true;
-            },
-            asyncItems: (text) async {
-              Uri url = Uri.parse(
-                  "https://kipi.covid19.go.id/api/get-faskes-vaksinasi?province=$keyProvince&city=$keyCity");
-              var response = await http.get(url);
-
-              List data = jsonDecode(response.body)['data'];
-
-              List<DataRsModels> dataRsModel = [];
-
-              data.forEach((element) {
-                dataRsModel.add(
-                  DataRsModels.fromJson(element),
-                );
-              });
-
-              return dataRsModel;
-            },
-            dropdownBuilder: (context, selectedItem) {
-              return Text(selectedItem?.nama ?? 'Pilih Faskes');
-            },
-            clearButtonProps: ClearButtonProps(),
-            popupProps: PopupProps.menu(
-              showSearchBox: true,
-              itemBuilder: (context, item, isSelected) => ListTile(
-                leading: Text(
-                  item.nama,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 20),
-          if (isRsSelected == true)
-            Container(
-              height: 1000,
+        ),
+        SizedBox(height: 20),
+        Obx(
+          () => Visibility(
+            visible: rujukanController.renderDetailRs.value,
+            child: Container(
+              height: 400,
+              // color: Colors.red,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    height: 50,
-                    width: 100,
+                    height: 40,
+                    width: 80,
                     decoration: BoxDecoration(
                       color: Color(0xFF6045E2),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     child: Center(
                       child: Text(
@@ -252,59 +144,117 @@ class _RsRujukanState extends State<RsRujukan> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  DetailRsWidget(label: 'Nama', value: detailRs['nama']),
-                  DetailRsWidget(label: 'Alamat', value: detailRs['alamat']),
-                  DetailRsWidget(label: 'Kota', value: detailRs['kota']),
-                  DetailRsWidget(
-                      label: 'Provinsi', value: detailRs['provinsi']),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Nama RS: "),
+                      Text("${rujukanController.detailRs.value['nama']}"),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Alamat RS: "),
+                      SizedBox(width: 30),
+                      Expanded(
+                        child: Container(
+                          child: Text(
+                            "${rujukanController.detailRs.value['alamat']}",
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Kota RS: "),
+                      Text("${rujukanController.detailRs.value['kota']}"),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Provinsi RS: "),
+                      Text("${rujukanController.detailRs.value['provinsi']}"),
+                    ],
+                  ),
+                  SizedBox(height: 30),
+                  Row(
+                    children: [
+                      InkWell(
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(bottom: 10),
+                              height: 50,
+                              width: 50,
+                              child: Icon(Icons.map, color: Colors.white),
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                            Text(
+                              "Buka Map",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        focusColor: Colors.red,
+                        onTap: () {
+                          String lat = rujukanController
+                              .detailRs.value['location']['latitude'];
+                          String long = rujukanController
+                              .detailRs.value['location']['longitude'];
+                          Uri url = Uri.parse(
+                              "https://maps.google.com/?q=$lat,$long");
+
+                          launchUrl(url);
+                        },
+                      ),
+                      SizedBox(width: 20),
+                      InkWell(
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(bottom: 10),
+                              height: 50,
+                              width: 50,
+                              child: Icon(Icons.phone, color: Colors.white),
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                            Text(
+                              "Telepon",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        focusColor: Colors.red,
+                        onTap: () {
+                          Uri url = Uri.parse(
+                              "tel:${rujukanController.detailRs.value['telp']}");
+
+                          launchUrl(url);
+                        },
+                      ),
+                    ],
+                  ),
                 ],
               ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class DetailRsWidget extends StatelessWidget {
-  String label;
-  String value;
-
-  DetailRsWidget({required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          height: 25,
-          width: 70,
-          decoration: BoxDecoration(
-            color: Color(0xFF6045E2),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Center(
-            child: Text(
-              label,
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-        Container(
-          alignment: Alignment.centerLeft,
-          height: 70,
-          width: MediaQuery.of(context).size.width * 0.7,
-          child: Text(
-            value,
-            maxLines: 5,
-            textAlign: TextAlign.justify,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
             ),
           ),
         ),
