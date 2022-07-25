@@ -1,30 +1,160 @@
 import 'dart:convert';
 
+import 'package:card_loading/card_loading.dart';
 import 'package:covid/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/home_controller.dart';
 
-import 'package:http/http.dart' as http;
-
 class HomeView extends GetView<HomeController> {
+  HomeController homeController = HomeController();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0,
-        elevation: 0,
-        backgroundColor: Color(0xFF5C42DC),
-      ),
-      body: ListView(
+    List<Widget> _selectScreen = [
+      ListView(
         children: [
           HeaderAppBar(),
           UpdateTerkini(),
           PahlawanCovid(),
           LayananFightCovid19(),
+          BeritaCovid(homeController: homeController),
+        ],
+      ),
+      MenuProfile(),
+    ];
+
+    return Obx(
+      () => Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 0,
+          elevation: 0,
+          backgroundColor: Color(0xFF5C42DC),
+        ),
+        body: _selectScreen.elementAt(homeController.selectedIndex.value),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (value) {
+            homeController.selectedIndex.value = value;
+          },
+          currentIndex: homeController.selectedIndex.value,
+          selectedItemColor: Color(0xFF5C42DC),
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+              backgroundColor: Color(0xFF5C42DC),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+              backgroundColor: Color(0xFF5C42DC),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BeritaCovid extends StatelessWidget {
+  const BeritaCovid({
+    Key? key,
+    required this.homeController,
+  }) : super(key: key);
+
+  final HomeController homeController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(left: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Berita Covid",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          FutureBuilder(
+            future: homeController.getDataNews(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              return Container(
+                height: 250,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 15,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Column(
+                        children: [
+                          Column(
+                            children: [
+                              CardLoading(
+                                height: 150,
+                                width: 300,
+                                margin: EdgeInsets.only(right: 20, top: 20),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              SizedBox(height: 10),
+                              CardLoading(
+                                height: 20,
+                                width: 300,
+                                margin: EdgeInsets.only(right: 20),
+                                borderRadius: BorderRadius.circular(10),
+                              )
+                            ],
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Uri url =
+                                  Uri.parse("${snapshot.data[index]['url']}");
+                              launchUrl(url);
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(right: 20, top: 20),
+                                  height: 150,
+                                  width: 300,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          "${snapshot.data[index]['urlToImage']}"),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Container(
+                                  margin: EdgeInsets.only(right: 20),
+                                  width: 300,
+                                  height: 30,
+                                  child: Text(
+                                    "${snapshot.data[index]['title']}",
+                                    maxLines: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      );
+                    }
+                  },
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
@@ -59,11 +189,13 @@ class UpdateTerkini extends StatelessWidget {
               future: homeController.getData(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: Color(0xFF5C42DC),
-                      backgroundColor: Color(0xAA5C42DC),
-                    ),
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CardLoading(height: 107, width: 102),
+                      CardLoading(height: 107, width: 102),
+                      CardLoading(height: 107, width: 102),
+                    ],
                   );
                 } else {
                   return Row(
@@ -438,6 +570,103 @@ class HeaderAppBar extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class MenuProfile extends StatelessWidget {
+  const MenuProfile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        AppBar(
+          title: Text("Profile Menu"),
+          centerTitle: true,
+          backgroundColor: Color(0xFF5C42DC),
+        ),
+        Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("App Version"),
+                  Text("v1.0"),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Name App"),
+                  Text("Covid App"),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Author App by"),
+                  InkWell(
+                    onTap: () {
+                      launchUrl(
+                          Uri.parse("https://www.instagram.com/dimassfeb"));
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                          "Dimas Febriyanto",
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Icon(Icons.open_in_new),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Design App by"),
+                  InkWell(
+                    onTap: () {
+                      launchUrl(Uri.parse(
+                          "https://www.figma.com/community/file/849809659468946971"));
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                          "Nanda Febrian Adhinugroho",
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Icon(Icons.open_in_new),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Last Updated"),
+                  Text("24 Jul 2022"),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

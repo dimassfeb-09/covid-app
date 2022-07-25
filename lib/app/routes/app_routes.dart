@@ -9,6 +9,7 @@ abstract class Routes {
   static const HOTLINE = _Paths.HOTLINE;
   static const INTERNASIONAL = _Paths.INTERNASIONAL;
   static const RUJUKANRS = _Paths.RUJUKANRS;
+  static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const HOTLINE = '/hotline';
   static const INTERNASIONAL = '/internasional';
   static const RUJUKANRS = '/rujukanrs';
+  static const SPLASHSCREEN = '/splashscreen';
 }

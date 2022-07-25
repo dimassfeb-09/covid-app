@@ -1,1 +1,0 @@
-export 'package:covid/presentation/detailRS/detail_r_s.screen.dart';

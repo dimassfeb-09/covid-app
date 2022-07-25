@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   //TODO: Implement HomeController
 
+  RxInt selectedIndex = 0.obs;
+
   Future getData() async {
     Uri url = Uri.parse("https://data.covid19.go.id/public/api/update.json");
     var response = await http.get(url);
@@ -45,5 +47,17 @@ class HomeController extends GetxController {
     var page = mapData[tipe]['page'];
 
     return {"title": title, "logo": logo, "page": page};
+  }
+
+  Future getDataNews() async {
+    String apiKey = "pub_952662d529b70aafe95a868df873ad5b9ada";
+
+    Uri url = Uri.parse(
+        "https://newsapi.org/v2/everything?q=covid&apiKey=7735aaca160040e7a265b83222cae677");
+    var response = await http.get(url);
+
+    List fetchData = jsonDecode(response.body)['articles'];
+
+    return fetchData;
   }
 }
