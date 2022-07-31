@@ -12,8 +12,9 @@ class HotlineView extends GetView<HotlineController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF6045E2),
-        title: const Text('HotlineView'),
+        backgroundColor: Color(0xFF278BD8),
+        title: const Text('HOTLINE'),
+        elevation: 0,
         centerTitle: true,
       ),
       body: Padding(
@@ -70,7 +71,7 @@ class HotLineButton extends StatelessWidget {
         launchUrl(
           _url,
           mode: LaunchMode.externalApplication,
-          webViewConfiguration: WebViewConfiguration(
+          webViewConfiguration: const WebViewConfiguration(
             enableJavaScript: true,
             enableDomStorage: true,
           ),
@@ -94,7 +95,7 @@ class HotLineButton extends StatelessWidget {
             SizedBox(width: 20),
             Text(
               hotlineLabel,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,

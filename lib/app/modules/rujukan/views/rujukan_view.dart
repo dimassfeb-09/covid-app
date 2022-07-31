@@ -17,8 +17,8 @@ class RujukanView extends GetView<RujukanController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF6045E2),
-        elevation: 2,
+        backgroundColor: Color(0xFF278BD8),
+        elevation: 0,
         title: const Text(
           'Rumah Sakit Rujukan',
           style: TextStyle(
@@ -48,10 +48,10 @@ class RsRujukan extends StatelessWidget {
             rujukanController.province_id.value = value!.value;
             print("Selected Province: " + value.key);
           },
-          popupProps: PopupProps.menu(
+          popupProps: const PopupProps.menu(
             showSearchBox: true,
           ),
-          dropdownDecoratorProps: DropDownDecoratorProps(
+          dropdownDecoratorProps: const DropDownDecoratorProps(
             dropdownSearchDecoration: InputDecoration(
               border: OutlineInputBorder(),
               label: Text("Pilih Provinsi"),
@@ -68,10 +68,10 @@ class RsRujukan extends StatelessWidget {
 
             print("Selected City: " + value.key);
           },
-          popupProps: PopupProps.menu(
+          popupProps: const PopupProps.menu(
             showSearchBox: true,
           ),
-          dropdownDecoratorProps: DropDownDecoratorProps(
+          dropdownDecoratorProps: const DropDownDecoratorProps(
             dropdownSearchDecoration: InputDecoration(
               border: OutlineInputBorder(),
               label: Text("Pilih Kota"),
@@ -106,10 +106,10 @@ class RsRujukan extends StatelessWidget {
               },
             });
           },
-          popupProps: PopupProps.menu(
+          popupProps: const PopupProps.menu(
             showSearchBox: true,
           ),
-          dropdownDecoratorProps: DropDownDecoratorProps(
+          dropdownDecoratorProps: const DropDownDecoratorProps(
             dropdownSearchDecoration: InputDecoration(
               border: OutlineInputBorder(),
               label: Text("Pilih Rumah Sakit"),
@@ -133,7 +133,7 @@ class RsRujukan extends StatelessWidget {
                       color: Color(0xFF6045E2),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "Detail RS",
                         style: TextStyle(
