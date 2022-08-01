@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:covid/models/dataCovidIndonesiaModels.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController

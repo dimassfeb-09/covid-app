@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 
 import 'app/routes/app_pages.dart';
 
-void main() {
+// Import the generated file
+
+void main() async {
   runApp(
     GetMaterialApp(
       title: "Application",

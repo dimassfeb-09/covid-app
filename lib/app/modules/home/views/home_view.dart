@@ -32,7 +32,7 @@ class HomeView extends GetView<HomeController> {
           ),
         ],
       ),
-      MenuProfile(),
+      MenuAbout(),
     ];
 
     return Obx(
@@ -52,8 +52,8 @@ class HomeView extends GetView<HomeController> {
               backgroundColor: Color(0xFF278BD8),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
+              icon: Icon(Icons.settings),
+              label: 'About',
               backgroundColor: Color(0xFF278BD8),
             ),
           ],
@@ -182,28 +182,50 @@ class UpdateTerkini extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Update Terkini",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    CardLoading(
+                      height: 20,
+                      width: 100,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    Text(DateFormat.yMMMMd().format(DateTime.now())),
+                    CardLoading(
+                      height: 20,
+                      width: 90,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ],
                 ),
                 SizedBox(height: 12),
                 Container(
-                  height: 220,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
                     children: [
-                      Column(
+                      // Data Positif, Sembuh Negatif
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CardLoading(height: 105, width: size.width * 0.45),
-                          CardLoading(height: 105, width: size.width * 0.45),
+                          CardLoading(
+                            height: 110,
+                            width: size.width * 0.29,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          CardLoading(
+                            height: 110,
+                            width: size.width * 0.29,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          CardLoading(
+                            height: 110,
+                            width: size.width * 0.29,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ],
                       ),
+                      SizedBox(height: 16),
+                      // Chart
                       CardLoading(
-                          height: size.height, width: size.width * 0.45),
+                        height: 190,
+                        width: size.width,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ],
                   ),
                 ),
@@ -231,7 +253,7 @@ class UpdateTerkini extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Update Terkini",
+                      "Update Hari Ini",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(DateFormat.yMMMMd().format(DateTime.now())),
@@ -246,7 +268,7 @@ class UpdateTerkini extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            height: 100,
+                            height: 110,
                             width: size.width * 0.29,
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -272,13 +294,24 @@ class UpdateTerkini extends StatelessWidget {
                                   width: 25,
                                 ),
                                 Text(
-                                    snapshot.data['jumlah_positif'].toString()),
-                                Text("Positif"),
+                                  snapshot.data['jumlah_positif'].toString(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Color(0xFF6045E2),
+                                  ),
+                                ),
+                                Text(
+                                  "Positif",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                           Container(
-                            height: 100,
+                            height: 110,
                             width: size.width * 0.29,
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -302,13 +335,25 @@ class UpdateTerkini extends StatelessWidget {
                                   height: 25,
                                   width: 25,
                                 ),
-                                Text(snapshot.data['jumlah_sembuh'].toString()),
-                                Text("Sembuh"),
+                                Text(
+                                  snapshot.data['jumlah_sembuh'].toString(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Color(0xFF2ECC71),
+                                  ),
+                                ),
+                                Text(
+                                  "Sembuh",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                           Container(
-                            height: 100,
+                            height: 110,
                             width: size.width * 0.29,
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -333,9 +378,20 @@ class UpdateTerkini extends StatelessWidget {
                                   height: 25,
                                   width: 25,
                                 ),
-                                Text(snapshot.data['jumlah_meninggal']
-                                    .toString()),
-                                Text("Meninggal"),
+                                Text(
+                                  snapshot.data['jumlah_meninggal'].toString(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                Text(
+                                  "Meninggal",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -347,14 +403,13 @@ class UpdateTerkini extends StatelessWidget {
                         height: 190,
                         width: size.width,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Color(0xFF278BD8).withOpacity(0.9),
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
-                              blurRadius: 15,
-                              color: Colors.blue,
-                              spreadRadius: -10,
-                              offset: Offset(1, 5),
+                              offset: Offset(2, 4),
+                              color: Colors.grey.withOpacity(0.5),
+                              blurRadius: 10,
                             ),
                           ],
                           border: Border.all(
@@ -364,10 +419,25 @@ class UpdateTerkini extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Image(
-                              image: AssetImage("assets/images/statistik.png"),
-                              height: 25,
-                              width: 25,
+                            Row(
+                              children: [
+                                SizedBox(width: 20),
+                                Image(
+                                  image:
+                                      AssetImage("assets/images/statistik.png"),
+                                  height: 25,
+                                  width: 25,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  "Grafik Data Covid",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -401,7 +471,13 @@ class UpdateTerkini extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      Text("Positif"),
+                                      Text(
+                                        "Positif",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -434,7 +510,13 @@ class UpdateTerkini extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      Text("Sembuh"),
+                                      Text(
+                                        "Sembuh",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -467,7 +549,13 @@ class UpdateTerkini extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      Text("Meninggal"),
+                                      Text(
+                                        "Meninggal",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -515,173 +603,199 @@ class PahlawanCovid extends StatelessWidget {
 }
 
 class LayananFightCovid19 extends StatelessWidget {
-  List menu = [
-    {
-      "RS": {
-        "Route": Routes.RUJUKAN,
-        "title": "RS Rujukan",
-        "logo": "assets/images/LayananCovid/rumah-sakit.png",
-      },
-      "HOTLINE": {
-        "Route": Routes.HOTLINE,
-        "title": "Hotline",
-        "logo": "assets/images/LayananCovid/hotline.png",
-      },
-      "INTERNASIONAL": {
-        "Route": Routes.INTERNASIONAL,
-        "title": "Data \nInternasional",
-        "logo": "assets/images/LayananCovid/data-internasional.png",
-      },
-    }
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 16),
-          height: 135,
-          width: MediaQuery.of(context).size.width,
-          child: Column(
+    return FutureBuilder(
+      future: Future.delayed(Duration(milliseconds: 200)),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Layanan Fight Covid",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.RUJUKAN);
-                    },
-                    child: Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width * 0.29,
-                      decoration: BoxDecoration(
-                        color: Colors.blue[300],
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 15,
-                            color: Colors.blue,
-                            spreadRadius: -9,
-                            offset: Offset(1, 6),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Image(
-                            image: AssetImage(
-                              "assets/images/LayananCovid/rumah-sakit.png",
-                            ),
-                            height: 50,
-                            width: 50,
-                          ),
-                          Text(
-                            "RS Rujukan",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                height: 135,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CardLoading(
+                      height: 15,
+                      width: 130,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.HOTLINE);
-                    },
-                    child: Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width * 0.29,
-                      decoration: BoxDecoration(
-                        color: Colors.blue[300],
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 15,
-                            color: Colors.blue,
-                            spreadRadius: -9,
-                            offset: Offset(1, 6),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Image(
-                            image: AssetImage(
-                              "assets/images/LayananCovid/hotline.png",
-                            ),
-                            height: 50,
-                            width: 50,
-                          ),
-                          Text(
-                            "Hotline",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
+                    SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CardLoading(
+                          height: 100,
+                          width: MediaQuery.of(context).size.width * 0.29,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        CardLoading(
+                          height: 100,
+                          width: MediaQuery.of(context).size.width * 0.29,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        CardLoading(
+                          height: 100,
+                          width: MediaQuery.of(context).size.width * 0.29,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ],
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.INTERNASIONAL);
-                    },
-                    child: Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width * 0.29,
-                      decoration: BoxDecoration(
-                        color: Colors.blue[300],
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 15,
-                            color: Colors.blue,
-                            spreadRadius: -9,
-                            offset: Offset(1, 6),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Image(
-                            image: AssetImage(
-                              "assets/images/LayananCovid/data-internasional.png",
-                            ),
-                            height: 50,
-                            width: 50,
-                          ),
-                          Text(
-                            textAlign: TextAlign.center,
-                            "Data\nInternasional",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
-          ),
-        ),
-      ],
+          );
+        } else {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                height: 135,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Layanan Covid Analys",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed(Routes.RUJUKAN);
+                          },
+                          child: Container(
+                            height: 100,
+                            width: MediaQuery.of(context).size.width * 0.29,
+                            decoration: BoxDecoration(
+                              color: Colors.blue[300],
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(1, 5),
+                                  color: Colors.grey,
+                                  blurRadius: 10,
+                                  spreadRadius: -5,
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Image(
+                                  image: AssetImage(
+                                    "assets/images/LayananCovid/rumah-sakit.png",
+                                  ),
+                                  height: 45,
+                                  width: 45,
+                                ),
+                                Text(
+                                  "RS Rujukan",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed(Routes.HOTLINE);
+                          },
+                          child: Container(
+                            height: 100,
+                            width: MediaQuery.of(context).size.width * 0.29,
+                            decoration: BoxDecoration(
+                              color: Colors.blue[300],
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(1, 5),
+                                  color: Colors.grey,
+                                  blurRadius: 10,
+                                  spreadRadius: -5,
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Image(
+                                  image: AssetImage(
+                                    "assets/images/LayananCovid/hotline.png",
+                                  ),
+                                  height: 45,
+                                  width: 45,
+                                ),
+                                Text(
+                                  "Hotline",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed(Routes.INTERNASIONAL);
+                          },
+                          child: Container(
+                            height: 100,
+                            width: MediaQuery.of(context).size.width * 0.29,
+                            decoration: BoxDecoration(
+                              color: Colors.blue[300],
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(1, 5),
+                                  color: Colors.grey,
+                                  blurRadius: 10,
+                                  spreadRadius: -5,
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Image(
+                                  image: AssetImage(
+                                    "assets/images/LayananCovid/data-internasional.png",
+                                  ),
+                                  height: 45,
+                                  width: 45,
+                                ),
+                                Text(
+                                  textAlign: TextAlign.center,
+                                  "Data\nInternasional",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        }
+      },
     );
   }
 }
@@ -693,85 +807,140 @@ class HeaderAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: 150,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color: Color(0xFF278BD8),
-            borderRadius: BorderRadiusDirectional.only(
-              bottomStart: Radius.circular(20),
-              bottomEnd: Radius.circular(20),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 20,
-          left: 20,
-          child: Text(
-            "Analysis of covid 19 indonesia",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 50,
-          left: 20,
-          child: Text(
-            "Let's fight covid 19 together",
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 80,
-          height: 50,
-          width: MediaQuery.of(context).size.width,
-          child: Container(
-            padding: EdgeInsets.only(left: 20),
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              color: Colors.blue[400],
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.location_on,
-                  color: Colors.white,
+    return FutureBuilder(
+      future: Future.delayed(Duration(milliseconds: 200)),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Stack(
+            children: [
+              CardLoading(
+                height: 150,
+                width: MediaQuery.of(context).size.width,
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20)),
+              ),
+              Positioned(
+                top: 20,
+                left: 20,
+                child: CardLoading(
+                  height: 25,
+                  width: 290,
+                  borderRadius: BorderRadius.circular(100),
                 ),
-                SizedBox(width: 10),
-                Text(
-                  "Indonesia",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+              ),
+              Positioned(
+                top: 50,
+                left: 20,
+                child: CardLoading(
+                  height: 25,
+                  width: 190,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
+              Positioned(
+                top: 80,
+                width: MediaQuery.of(context).size.width,
+                child: CardLoading(
+                  height: 50,
+                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+            ],
+          );
+        } else {
+          return Stack(
+            children: [
+              Container(
+                height: 150,
+                width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(
+                  color: Color(0xFF278BD8),
+                  borderRadius: BorderRadiusDirectional.only(
+                    bottomStart: Radius.circular(20),
+                    bottomEnd: Radius.circular(20),
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      ],
+              ),
+              const Positioned(
+                left: 250,
+                bottom: 10,
+                child: Image(
+                  image: AssetImage("assets/images/header-covid.png"),
+                  height: 200,
+                  width: 200,
+                ),
+              ),
+              const Positioned(
+                top: 20,
+                left: 20,
+                child: Text(
+                  "Analisis Covid 19 Indonesia",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const Positioned(
+                top: 50,
+                left: 20,
+                child: Text(
+                  "Lawan Covid 19 dengan kekuatan bersama!",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 80,
+                height: 50,
+                width: MediaQuery.of(context).size.width,
+                child: Container(
+                  padding: EdgeInsets.only(left: 20),
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.blue[400],
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        color: Colors.white,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        "Indonesia",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
+      },
     );
   }
 }
 
-class MenuProfile extends StatelessWidget {
-  const MenuProfile({Key? key}) : super(key: key);
+class MenuAbout extends StatelessWidget {
+  const MenuAbout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         AppBar(
-          title: Text("Profile Menu"),
+          title: Text("About"),
           centerTitle: true,
           backgroundColor: Color(0xFF278BD8),
         ),
@@ -823,33 +992,8 @@ class MenuProfile extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Design App by"),
-                  InkWell(
-                    onTap: () {
-                      launchUrl(Uri.parse(
-                          "https://www.figma.com/community/file/849809659468946971"));
-                    },
-                    child: Row(
-                      children: [
-                        Text(
-                          "Nanda Febrian Adhinugroho",
-                          style: TextStyle(
-                            color: Colors.blue,
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Icon(Icons.open_in_new),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
                   Text("Last Updated"),
-                  Text("24 Jul 2022"),
+                  Text("1 Aug 2022"),
                 ],
               ),
             ],

@@ -108,7 +108,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              height: 100,
+                              height: 110,
                               width: MediaQuery.of(context).size.width * 0.29,
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -126,7 +126,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                               ),
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   const Image(
                                     image:
@@ -150,7 +150,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                               ),
                             ),
                             Container(
-                              height: 100,
+                              height: 110,
                               width: MediaQuery.of(context).size.width * 0.29,
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -168,7 +168,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                               ),
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   const Image(
                                     image:
@@ -192,7 +192,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                               ),
                             ),
                             Container(
-                              height: 100,
+                              height: 110,
                               width: MediaQuery.of(context).size.width * 0.29,
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -210,7 +210,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                               ),
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   const Image(
                                     image: AssetImage(
@@ -433,7 +433,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              height: 100,
+                              height: 110,
                               width: MediaQuery.of(context).size.width * 0.29,
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -451,7 +451,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                               ),
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   const Image(
                                     image:
@@ -475,7 +475,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                               ),
                             ),
                             Container(
-                              height: 100,
+                              height: 110,
                               width: MediaQuery.of(context).size.width * 0.29,
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -493,7 +493,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                               ),
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   const Image(
                                     image:
@@ -517,7 +517,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                               ),
                             ),
                             Container(
-                              height: 100,
+                              height: 110,
                               width: MediaQuery.of(context).size.width * 0.29,
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -535,7 +535,7 @@ class _UpdateTerkiniState extends State<UpdateTerkini> {
                               ),
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   const Image(
                                     image: AssetImage(
