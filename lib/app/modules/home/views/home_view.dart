@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/home_controller.dart';
+import 'about_view.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeController homeController = HomeController();
@@ -928,78 +929,6 @@ class HeaderAppBar extends StatelessWidget {
           );
         }
       },
-    );
-  }
-}
-
-class MenuAbout extends StatelessWidget {
-  const MenuAbout({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AppBar(
-          title: Text("About"),
-          centerTitle: true,
-          backgroundColor: Color(0xFF278BD8),
-        ),
-        Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("App Version"),
-                  Text("v1.0"),
-                ],
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Name App"),
-                  Text("Covid App"),
-                ],
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Author App by"),
-                  InkWell(
-                    onTap: () {
-                      launchUrl(
-                          Uri.parse("https://www.instagram.com/dimassfeb"));
-                    },
-                    child: Row(
-                      children: [
-                        Text(
-                          "Dimas Febriyanto",
-                          style: TextStyle(
-                            color: Colors.blue,
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Icon(Icons.open_in_new),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Last Updated"),
-                  Text("1 Aug 2022"),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }
