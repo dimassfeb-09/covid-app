@@ -80,7 +80,7 @@ class BeritaCovid extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Berita Covid",
+            "Berita Terkini",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           FutureBuilder(
@@ -432,7 +432,7 @@ class UpdateTerkini extends StatelessWidget {
                                 ),
                                 SizedBox(width: 10),
                                 Text(
-                                  "Grafik Data Covid",
+                                  "Grafik Data Persebaran",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -663,7 +663,7 @@ class LayananFightCovid19 extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Layanan Covid Analys",
+                      "Layanan Peta Persebaran",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 16),
@@ -877,7 +877,7 @@ class HeaderAppBar extends StatelessWidget {
                 top: 20,
                 left: 20,
                 child: Text(
-                  "Analisis Covid 19 Indonesia",
+                  "Analisis Peta Persebaran",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -889,7 +889,7 @@ class HeaderAppBar extends StatelessWidget {
                 top: 50,
                 left: 20,
                 child: Text(
-                  "Lawan Covid 19 dengan kekuatan bersama!",
+                  "Lawan Corona dengan kekuatan bersama!",
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.white,

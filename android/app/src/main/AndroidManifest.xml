@@ -2,7 +2,7 @@
     package="dimass.com.covid">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="Analisis Covid 19"
+        android:label="Peta Persebaran Indonesia"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
